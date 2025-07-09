@@ -120,10 +120,10 @@
     <div class="hero-body">
       <!-- 使用 Flexbox 居中 -->
       <div class="has-text-centered">
-        <img src="./static/images/teaser.png" alt="Teaser Image" style="width: 100%; height: auto;">
+        <img src="./static/images/teaser.png" alt="Teaser Image" style="width: 90%; height: auto;">
       </div>
       <h2 class="subtitle has-text-centered">
-        TriVLA</span> is a Vision-Language-Action (VLA) system with a triple-system architecture. The TriVLA converts image observations and language instructions into token sequences, which are processed by the Vision-Language Model (VLM) for reasoning using common knowledge, and the Stable Video Diffusion Model (VDM) as the world model for both current and future predictions. The outputs of the VLM and VDM, along with robot state and action encodings, are fed into the policy learning module to generate motor actions. The TriVLA can be used directly to perform tasks based on prompts or fine-tuned with high-quality data to support complex multi-stage tasks.	
+        4D Diffusion Policy</span> Spatial-temporal awareness in the 4D Diffusion Policy (DP4). Previous methods train perception and decision-making with trajectory supervision, but trajectory cloning fails to capture the 3D spatial and 4D spatiotemporal relationships. In contrast, DP4 constructs the current 3D scene with 3D spatial supervision from a single RGB-D view and predicts future 3D scene candidates using 4D spatiotemporal supervision, optimizing trajectory generation by effectively capturing both 3D structures and 4D dependencies.
       </h2>
     </div>
   </div>
@@ -138,8 +138,7 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-          Recent advancements in vision-language models (VLMs) for common-sense reasoning have led to the development of vision-language-action (VLA) models, enabling robots to perform generalized manipulation. Although existing autoregressive VLA methods design a specific architecture like dual-system to leverage large-scale pretrained knowledge, they tend to capture static information, often neglecting the dynamic aspects vital for embodied tasks. To this end, we propose TriVLA, a unified Vision-Language-Action model with a triple-system architecture for general robot control. The vision-language module (System 2) interprets the environment through vision and language instructions. The dynamics perception module (System 3) inherently produces visual representations that encompass both current static information and predicted future dynamics, thereby providing valuable guidance for policy learning. TriVLA utilizes pre-trained VLM model and fine-tunes pre-trained video foundation model on robot datasets along with internet human manipulation data. The subsequent policy learning module (System 1) generates fluid motor actions in real time. Experimental evaluation demonstrates that TriVLA operates at approximately 36 Hz and surpasses state-of-the-art imitation learning baselines on standard simulation benchmarks as well as challenging real-world manipulation tasks.
-          </p>
+          Visual imitation learning is effective for robots to learn versatile tasks. However, many existing methods rely on behavior cloning with supervised historical trajectories, limiting their 3D spatial and 4D spatiotemporal awareness. Consequently, these methods struggle to capture the 3D structures and 4D spatiotemporal relationships necessary for real-world deployment. In this work, we propose 4D Diffusion Policy (DP4), a novel visual imitation learning method that incorporates spatiotemporal awareness into diffusion-based policies. Unlike traditional approaches that rely on trajectory cloning, DP4 leverages a dynamic Gaussian world model to guide the learning of 3D spatial and 4D spatiotemporal perceptions from interactive environments. Our method constructs the current 3D scene from a single-view RGB-D observation and predicts the future 3D scene, optimizing trajectory generation by explicitly modeling both spatial and temporal dependencies. Extensive experiments across 17 simulation tasks with 173 variants and 3 real-world robotic tasks demonstrate that the 4D Diffusion Policy (DP4) outperforms baseline methods, improving the average simulation task success rate by 16.4\% (Adroit), 14\% (DexArt), and 6.45\% (RLBench), and the average real-world robotic task success rate by 8.6\%.          </p>
         </div>
       </div>
     </div>
@@ -153,37 +152,7 @@
     <!-- Introduction. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h3 class="title is-3">Comparison between previous dual-system architectures and our triple-system approach.</h3>
-        <div class="content has-text-justified">
-        </p>
-          <!-- 图片居中 -->
-          <div class="has-text-centered">
-            <img src="./static/images/system.png" alt="Introduction Image" style="width: 100%; height: auto;">
-          </div>
-          <p>
-          Our TriVLA employs a unified triple-system compositional architecture that integrates world knowledge (System 2) and the world model (System 3), both critical for general policy learning. Prior dual-system methods typically addressed only one component, failing to unify both.
-          </p>
-          <p>
-          </p>
-          <h4 class="subtitle is-4">Main Contributions:</h4>
-          <ul class="content">
-            <li>A Unified Vision-Language-Action Framework: We propose a unified Vision-Language-Action model to integrate the world knowledge and world model for general policy learning across multiple robot embodiments.</li>
-            <li>Triple-System Compositional Architecture: The proposed TriVLA model designs a novel triple-system compositional architecture that possesses both high-level reasoning and dynamic predictive representation, enables a robot to process much more complex prompts and long-horizon manipulation tasks.</li>
-            <li>State-of-the-art performance: TriVLA outperforms other baseline algorithms across simulated and real-world settings,  including new combinations of skills seen during training, in the context of scenario. This demonstrates the effectiveness in both alignment with human intent and long-horizon task success.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <!--/ Introduction. -->
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <!-- Introduction. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">The pipeline of our TriVLA.</h2>
+        <h2 class="title is-3">The framework of our 4D Diffusion Policy (DP4).</h2>
         <div class="content has-text-justified">
         </p>
           <!-- 图片居中 -->
@@ -191,8 +160,7 @@
             <img src="./static/images/pipeline.png" alt="Introduction Image" style="width: 100%; height: auto;">
           </div>
           <p>
-          Our TriVLA adopts a triple-system compositional architecture on the basis of the existing dual-system structure. The System 2 vision-language module employs a pre-trained Eagle-2 Vision-Language Model (VLM) to process the robot’s visual inputs and language instructions, enabling environmental interpretation and task goal understanding. The System 3 dynamics perception module uses a general-purpose video diffusion model to capture entire video sequences and predict future frames based on current observations and task instructions.	Subsequently, the System 1 policy learning module—trained using action flow-matching—cross-attends to the output tokens from Systems 2 and 3, and employs embodiment-specific encoders and decoders to handle variable state and action dimensions for generating motor actions.	
-          </p>
+          From a single-view RGB-D observation, we construct 3D point clouds and extract global and local features to enrich both holistic and focused perceptions. These multi-level representations condition the diffusion policy model to generate trajectories based on current robot states. We introduce a Gaussian world model in DP4 to capture 3D structures and 4D spatiotemporal relationships. The current observation’s 3D Gaussian Splatting (3DGS) is derived via a generalizable Gaussian regressor from point clouds and multi-level features. By enforcing consistency between ground-truth and rendered RGB-D images from this 3DGS, we enhance 3D spatial awareness. Additionally, future 3DGS are predicted from current states using policy-generated trajectories, with rendered RGB-D consistency fostering 4D spatiotemporal awareness. This improved spatiotemporal representation significantly benefits complex tasks such as object grasping and dexterous manipulation.          </p>
           <p>
           </p>
         </div>
@@ -213,16 +181,16 @@
           <!-- 并排图片 -->
           <div class="columns">
             <div class="column">
-              <img src="./static/images/qual.png" alt="Result Image 1" style="width: 100%; height: auto;">
+              <img src="./static/images/qual_1.png" alt="Result Image 1" style="width: 100%; height: auto;">
             </div>
             <div class="column">
-              <img src="./static/images/video.png" alt="Result Image 2" style="width: 100%; height: auto;">
+              <img src="./static/images/qual_2.png" alt="Result Image 2" style="width: 100%; height: auto;">
             </div>
           </div>
 
           <ul class="content">
-            <li> Our TriVLA performs exceptionally well in long-horizon missions. Taking the CALVIN simulation task as an example, TriVLA integrates world knowledge for intent understanding and leverages a world model for future prediction when given multiple sequential instructions, enabling effective execution of long-horizon tasks.</li>
-            <li> Visualization of one-step visual representations of dynamics perception module. We can observe that representation can provide valuable information on physical dynamics, although the textures and details are not precise enough.</li>
+            <li> The red mark indicates a pose that significantly deviates from the expert demonstration, while the green mark denotes a pose that aligns with the expert trajectory. The 4D Diffusion Policy (DP4) integrates 3D spatial and 4D spatiotemporal awareness with diffusion policies, successfully completing the tasks.</li>
+            <li> Visualization of DP4 performance on three real-world robotic tasks. DP4 demonstrates strong performance in real-world settings and effectively handles a variety of common tasks with a single view.</li>
           </ul>
         </div>
       </div>
@@ -230,41 +198,6 @@
     <!--/ Results -->
   </div>
 </section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3 has-text-centered">Video Results</h2> <!-- 标题居中 -->
-        
-        <!-- 并排视频容器（限制宽度 + 居中） -->
-        <div class="columns is-vcentered is-centered">
-          <!-- 视频1 -->
-          <div class="column has-text-centered"> <!-- 列内居中 -->
-            <div style="max-width: 600px; margin: 0 auto;"> <!-- 限制视频宽度 -->
-              <video controls style="width: 100%; max-height: 400px; border-radius: 8px; object-fit: contain;">
-                <source src="./static/videos/v1.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          </div>
-          
-          <!-- 视频2 -->
-          <div class="column has-text-centered">
-            <div style="max-width: 600px; margin: 0 auto;">
-              <video controls style="width: 100%; max-height: 400px; border-radius: 8px; object-fit: contain;">
-                <source src="./static/videos/v2.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 
 
 
