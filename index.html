@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="TriVLA: A Triple-System-Based Unified Vision-Language-Action Model for General Robot Control">
+  <meta name="keywords" content="Vision Language Action, Policy Learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TriVLA: A Triple-System-Based Unified Vision-Language-Action Model for General Robot Control</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">TriVLA: A Triple-System-Based Unified Vision-Language-Action Model for General Robot Control</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://zhenyangliu.github.io/">Zhenyang Liu</a><sup>1,2</sup>,</span>
+            <span class="author-block">
+              <a href="">Yongchong Gu</a><sup>1,2</sup>,</span>
+            <span class="author-block">
+              <a href="">Sixiao Zheng</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="">Xiangyang Xue</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="">Yanwei Fu</a><sup>1,2</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Fudan University,</span>
+            <span class="author-block"><sup>2</sup>Shanghai Innovation Institute,</span>
+          </div>
+<!--           <p class="has-text-weight-bold has-text-dark is-size-4">CVPR 2025</p>
+          <div class="column has-text-centered"> -->
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <!-- 使用 Flexbox 居中 -->
+      <div class="has-text-centered">
+        <img src="./static/images/teaser.png" alt="Teaser Image" style="width: 100%; height: auto;">
+      </div>
+      <h2 class="subtitle has-text-centered">
+        TriVLA</span> is a Vision-Language-Action (VLA) system with a triple-system architecture. The TriVLA converts image observations and language instructions into token sequences, which are processed by the Vision-Language Model (VLM) for reasoning using common knowledge, and the Stable Video Diffusion Model (VDM) as the world model for both current and future predictions. The outputs of the VLM and VDM, along with robot state and action encodings, are fed into the policy learning module to generate motor actions. The TriVLA can be used directly to perform tasks based on prompts or fine-tuned with high-quality data to support complex multi-stage tasks.	
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+          Recent advancements in vision-language models (VLMs) for common-sense reasoning have led to the development of vision-language-action (VLA) models, enabling robots to perform generalized manipulation. Although existing autoregressive VLA methods design a specific architecture like dual-system to leverage large-scale pretrained knowledge, they tend to capture static information, often neglecting the dynamic aspects vital for embodied tasks. To this end, we propose TriVLA, a unified Vision-Language-Action model with a triple-system architecture for general robot control. The vision-language module (System 2) interprets the environment through vision and language instructions. The dynamics perception module (System 3) inherently produces visual representations that encompass both current static information and predicted future dynamics, thereby providing valuable guidance for policy learning. TriVLA utilizes pre-trained VLM model and fine-tunes pre-trained video foundation model on robot datasets along with internet human manipulation data. The subsequent policy learning module (System 1) generates fluid motor actions in real time. Experimental evaluation demonstrates that TriVLA operates at approximately 36 Hz and surpasses state-of-the-art imitation learning baselines on standard simulation benchmarks as well as challenging real-world manipulation tasks.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Introduction. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h3 class="title is-3">Comparison between previous dual-system architectures and our triple-system approach.</h3>
+        <div class="content has-text-justified">
+        </p>
+          <!-- 图片居中 -->
+          <div class="has-text-centered">
+            <img src="./static/images/system.png" alt="Introduction Image" style="width: 100%; height: auto;">
+          </div>
+          <p>
+          Our TriVLA employs a unified triple-system compositional architecture that integrates world knowledge (System 2) and the world model (System 3), both critical for general policy learning. Prior dual-system methods typically addressed only one component, failing to unify both.
+          </p>
+          <p>
+          </p>
+          <h4 class="subtitle is-4">Main Contributions:</h4>
+          <ul class="content">
+            <li>A Unified Vision-Language-Action Framework: We propose a unified Vision-Language-Action model to integrate the world knowledge and world model for general policy learning across multiple robot embodiments.</li>
+            <li>Triple-System Compositional Architecture: The proposed TriVLA model designs a novel triple-system compositional architecture that possesses both high-level reasoning and dynamic predictive representation, enables a robot to process much more complex prompts and long-horizon manipulation tasks.</li>
+            <li>State-of-the-art performance: TriVLA outperforms other baseline algorithms across simulated and real-world settings,  including new combinations of skills seen during training, in the context of scenario. This demonstrates the effectiveness in both alignment with human intent and long-horizon task success.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Introduction. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Introduction. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">The pipeline of our TriVLA.</h2>
+        <div class="content has-text-justified">
+        </p>
+          <!-- 图片居中 -->
+          <div class="has-text-centered">
+            <img src="./static/images/pipeline.png" alt="Introduction Image" style="width: 100%; height: auto;">
+          </div>
+          <p>
+          Our TriVLA adopts a triple-system compositional architecture on the basis of the existing dual-system structure. The System 2 vision-language module employs a pre-trained Eagle-2 Vision-Language Model (VLM) to process the robot’s visual inputs and language instructions, enabling environmental interpretation and task goal understanding. The System 3 dynamics perception module uses a general-purpose video diffusion model to capture entire video sequences and predict future frames based on current observations and task instructions.	Subsequently, the System 1 policy learning module—trained using action flow-matching—cross-attends to the output tokens from Systems 2 and 3, and employs embodiment-specific encoders and decoders to handle variable state and action dimensions for generating motor actions.	
+          </p>
+          <p>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Introduction. -->
+  </div>
+</section>
+
+  
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Results -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Results</h2>
+        <div class="content has-text-justified">
+          <!-- 并排图片 -->
+          <div class="columns">
+            <div class="column">
+              <img src="./static/images/qual.png" alt="Result Image 1" style="width: 100%; height: auto;">
+            </div>
+            <div class="column">
+              <img src="./static/images/video.png" alt="Result Image 2" style="width: 100%; height: auto;">
+            </div>
+          </div>
+
+          <ul class="content">
+            <li> Our TriVLA performs exceptionally well in long-horizon missions. Taking the CALVIN simulation task as an example, TriVLA integrates world knowledge for intent understanding and leverages a world model for future prediction when given multiple sequential instructions, enabling effective execution of long-horizon tasks.</li>
+            <li> Visualization of one-step visual representations of dynamics perception module. We can observe that representation can provide valuable information on physical dynamics, although the textures and details are not precise enough.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Results -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Video Results</h2> <!-- 标题居中 -->
+        
+        <!-- 并排视频容器（限制宽度 + 居中） -->
+        <div class="columns is-vcentered is-centered">
+          <!-- 视频1 -->
+          <div class="column has-text-centered"> <!-- 列内居中 -->
+            <div style="max-width: 600px; margin: 0 auto;"> <!-- 限制视频宽度 -->
+              <video controls style="width: 100%; max-height: 400px; border-radius: 8px; object-fit: contain;">
+                <source src="./static/videos/v1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+          
+          <!-- 视频2 -->
+          <div class="column has-text-centered">
+            <div style="max-width: 600px; margin: 0 auto;">
+              <video controls style="width: 100%; max-height: 400px; border-radius: 8px; object-fit: contain;">
+                <source src="./static/videos/v2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-centered">
+          <p>
+            Theme modified from 
+            <a href="https://github.com/nerfies/nerfies.github.io" target="_blank" rel="noopener noreferrer">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
